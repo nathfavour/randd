@@ -32,20 +32,27 @@ func main() {
 	fmt.Printf("Subject: %s (%d tokens)\n\n", subjectPath, mockTokenCount(originalCode))
 
 	// Pipeline A: Direct Text (Diff-style)
-	// Strategy: SEARCH/REPLACE
-	mutationA := `SEARCH: func Greeter(name string) string {
-REPLACE: func Greeter(name string, title string) string {`
+	mutationA := `SEARCH: 
+func Greeter(name string) string {
+	// Original greeting logic
+	return fmt.Sprintf("Hello, %s!", name)
+}
+REPLACE: 
+func Greeter(name string, title string) string {
+	// Original greeting logic
+	return fmt.Sprintf("Hello, %s %s!", title, name)
+}`
 	fmt.Printf("Pipeline A (Direct Text):\n")
 	fmt.Printf("  Mutation Payload: %d tokens\n", mockTokenCount(mutationA))
 
 	// Pipeline B: Direct AST (JSON)
-	// We'll simulate a portion of the JSON AST mutation
-	mutationB := `{"type": "FuncDecl", "name": "Greeter", "children": [{"type": "FuncType", "children": [{"type": "Field", "children": [{"type": "Ident", "name": "name"}]}, {"type": "Field", "children": [{"type": "Ident", "name": "title"}]}]}]}`
+	// Larger snippet to reflect body change
+	mutationB := `{"type": "FuncDecl", "name": "Greeter", "children": [{"type": "FuncType", "children": [{"type": "Field", "children": [{"type": "Ident", "name": "name"}]}, {"type": "Field", "children": [{"type": "Ident", "name": "title"}]}]}, {"type": "BlockStmt", "children": [{"type": "ReturnStmt", "value": "fmt.Sprintf(\"Hello, %s %s!\", title, name)"}]}]}`
 	fmt.Printf("Pipeline B (Direct AST):\n")
 	fmt.Printf("  Mutation Payload: %d tokens\n", mockTokenCount(mutationB))
 
 	// Pipeline C: Hybrid Bridge (DSL)
-	mutationC := "ADD_PARAM:Greeter:title:string"
+	mutationC := "ADD_PARAM:Greeter:title:string|REPLACE_BODY:Greeter:return fmt.Sprintf(\"Hello, %s %s!\", title, name)"
 	fmt.Printf("Pipeline C (Hybrid Bridge):\n")
 	fmt.Printf("  Mutation Payload: %d tokens\n", mockTokenCount(mutationC))
 
