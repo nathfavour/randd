@@ -43,6 +43,24 @@ func hybridTransform(source string, commands []string) (string, error) {
 				}
 				return true
 			})
+		case "REPLACE_BODY":
+			// Example: REPLACE_BODY:Greeter:return fmt.Sprintf("Hello, %s %s!", title, name)
+			funcName := parts[1]
+			newStmt := parts[2]
+			
+			// Parse the statement by wrapping it in a dummy func
+			snippet := fmt.Sprintf("package p; func _() { %s }", newStmt)
+			f_snippet, err := parser.ParseFile(token.NewFileSet(), "", snippet, 0)
+			if err == nil {
+				newStmts := f_snippet.Decls[0].(*ast.FuncDecl).Body.List
+				ast.Inspect(f, func(n ast.Node) bool {
+					fn, ok := n.(*ast.FuncDecl)
+					if ok && fn.Name.Name == funcName {
+						fn.Body.List = newStmts
+					}
+					return true
+				})
+			}
 		}
 	}
 
