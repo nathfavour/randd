@@ -1,0 +1,70 @@
+# --- R&D General ---
+bin/
+out/
+dist/
+build/
+*.log
+*.tmp
+*.bak
+.env
+.DS_Store
+Thumbs.db
+
+# --- Go ---
+/vendor/
+*.exe
+*.test
+*.prof
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.pytest_cache/
+
+# --- Node / JavaScript / TypeScript ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.next/
+
+# --- Rust ---
+/target/
+**/*.rs.bk
+
+# --- C / C++ ---
+*.o
+*.obj
+*.so
+*.a
+*.lib
+*.dll
+*.dylib
+
+# --- Java / Kotlin ---
+*.class
+*.jar
+*.war
+*.ear
+.gradle/
+/build/
+
+# --- IDEs / Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.zed/
+
+# --- Docker ---
+.docker/
+
+# --- Research Specific ---
+.ipynb_checkpoints/
+.agents/data/
+.agents/cache/
