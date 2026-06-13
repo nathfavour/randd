@@ -9,7 +9,7 @@
 ## Categories
 - `maths/`: Mathematical research and notes.
 - `cs/`: Computer Science and Software Engineering research.
-- `agent-skills/`: Specialized skills for AI agents.
+- `.agents/skills/`: Specialized skills for AI agents.
 - `snippets/`: Small, reusable code pieces.
 - `blueprints/`: High-level designs and architectures.
 - `experiments/`: Active R&D and prototypes.
